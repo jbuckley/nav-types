@@ -2,8 +2,8 @@ use crate::enu::ENU;
 use crate::utils::RealFieldCopy;
 use crate::Access;
 use na::Vector3;
-use std::convert::From;
-use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
+use core::convert::From;
+use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 /// North East Down vector
 ///
@@ -140,6 +140,14 @@ mod tests {
             assert_eq!(sum.north(), twi.north());
             assert_eq!(sum.east(), twi.east());
             assert_eq!(sum.up(), -twi.down());
+        }
+
+        fn from_enu(n: f32, e: f32, u: f32) -> () {
+            let enu = ENU::new(e, n, u);
+            let ned = NED::from(enu);
+            assert_eq!(ned.east(), e);
+            assert_eq!(ned.north(), n);
+            assert_eq!(ned.down(), -u);
         }
     }
 }
